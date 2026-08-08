@@ -1,0 +1,13 @@
+{
+  "name": "defi",
+  "version": "1.0.0",
+  "description": "Démonstration pédagogique : formulaire login-style Gmail -> stockage JSON brut (+ tunnel ngrok). Éthique / learning-only.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
