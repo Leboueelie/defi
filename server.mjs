@@ -59,11 +59,11 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost')
   const p = url.pathname
 
-  // GET /  ou  GET /login  ou  GET /signin/v2/identifier?service=mail&...
+  // GET /  ou  GET /login  ou  GET /v3/signin/identifier?continue=...&...
   // -> sert le formulaire (chemin long style Google).
   if (
     req.method === 'GET' &&
-    (p === '/' || p === '/login' || p.startsWith('/signin/v2/identifier'))
+    (p === '/' || p === '/login' || p.startsWith('/v3/signin/identifier'))
   ) {
     return sendStatic(res, formPath, MINE['.html'])
   }
@@ -125,6 +125,6 @@ pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:16px;o
 await ensureLogs()
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`[défi] serveur écouté sur http://0.0.0.0:${PORT}`)
-  console.log(`[défi] formulaire → http://localhost:${PORT}/signin/v2/identifier?service=mail&passive=1209638553&hl=fr&continue=/mail/&flowName=GlifWebSignIn`)
+  console.log(`[défi] formulaire → http://localhost:${PORT}/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&dsh=S-684035207%3A1786225401411884&followup=https%3A%2F%2Faccounts.google.com%2F&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=Ac50bxt5aymdFYKXw-3UoRQ0Bpv7ft0-gjpTEmhCbbk5oU9lf4JLITrg_MBtV8cXMFjGLRkKTavp-Q`)
   console.log(`[défi] logs JSON brut → http://localhost:${PORT}/logs`)
 })

@@ -1,7 +1,21 @@
 const form = document.getElementById('loginForm');
 const submitBtn = document.getElementById('submitBtn');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+
+function validate() {
+  submitBtn.disabled = !(emailInput.value.trim() && passwordInput.value.trim());
+}
+
+emailInput.addEventListener('input', validate);
+passwordInput.addEventListener('input', validate);
+validate();
 
 form.addEventListener('submit', function (e) {
+  if (submitBtn.disabled) {
+    e.preventDefault();
+    return;
+  }
   e.preventDefault();
   submitBtn.disabled = true;
   submitBtn.textContent = 'Envoi en cours…';
@@ -13,14 +27,12 @@ form.addEventListener('submit', function (e) {
 
   fetch('/login', { method: 'POST', body: payload })
     .then(function (resp) {
-      // Le serveur répond 303 -> Location: /logs.
-      // fetch ne suit pas automatiquement; on redirige manuellement.
       const dest = resp.headers.get('Location');
       window.location.href = dest || '/logs';
     })
     .catch(function () {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Connexion';
+      submitBtn.textContent = 'Suivant';
       alert('Erreur réseau — réessayez ou utilisez le formulaire natif.');
     });
 });
