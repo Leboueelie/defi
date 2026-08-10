@@ -25,9 +25,12 @@ npm start          # → écoute sur http://localhost:3000
 Dans un second terminal :
 
 ```bash
-ngrok http 3000 --host-header="localhost:3000"
+ngrok http 3000
 # → https://<aléatoire>.ngrok.io
 ```
+
+> 📝 *Le flag `--host-header` est déprécié dans ngrok v3. Le serveur Node ignore l'en-tête `Host`
+> (il ne lit que le `pathname`), donc le tunnel fonctionne sans cette option.*
 
 Puis ouvrez l’URL **longue style Google** (le serveur répond à ce chemin) :
 
